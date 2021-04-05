@@ -8,21 +8,19 @@ import '../app.dart';
 class AddScreen extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
 
 
   TextEditingController titleController = new TextEditingController();
   TextEditingController descController = new TextEditingController();
 
-  showSnackBar(String message){
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message),));
-  }
+
 
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      key: _scaffoldKey,
+ 
       appBar: AppBar(
         title: Text('Добавление задачи'),
       ),
@@ -45,7 +43,7 @@ class AddScreen extends StatelessWidget {
                     onTap: (){
                       if(formKey.currentState.validate()){
                         Provider.of<ApplicationBloc>(context, listen: false).addToDo(titleController.text.trim(), descController.text.trim());
-                        showSnackBar("Ваше дело успешно добавлено!");
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => App()));
                       }
                     },
                                   child: Container(

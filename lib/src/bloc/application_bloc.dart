@@ -30,6 +30,13 @@ enum userLoggedEnum{
     isDefault,
     isError
   }
+
+  enum userChangePasswordEnum{
+    isLoading,
+    isDefault,
+    isError,
+    isSuccess
+  }
 class ApplicationBloc with ChangeNotifier{
 
   AuthService authService = new AuthService();
@@ -55,6 +62,9 @@ class ApplicationBloc with ChangeNotifier{
 
   var _signUpState = signUpEnum.isDefault;
   get signUpState => this._signUpState;
+
+  var _userChangePasswordState = userChangePasswordEnum.isDefault;
+  get userChangePasswordState => this._userChangePasswordState;
 
   checkLoggedUser() async {
     String email = await HelperFunctions.getUserEmailSharedPreference();
@@ -112,6 +122,25 @@ class ApplicationBloc with ChangeNotifier{
     
   }
 
+  changeUserData(String firstName, String lastName) async {
+    bool success = await authService.changeUserData(firstName, lastName);
+    if(success) checkLoggedUser();
+  }
+  changeUserPasswrod(String oldPassword, String newPassword) async {
+    _userChangePasswordState = userChangePasswordEnum.isLoading;
+    notifyListeners();
+    bool success = await authService.changeUserPassword(oldPassword, newPassword);
+    if(success) {
+      _userChangePasswordState = userChangePasswordEnum.isSuccess;
+    }else{
+      _userChangePasswordState = userChangePasswordEnum.isError;
+    }
+    notifyListeners();
+  }
+
+
+
+
 
 
 
@@ -143,5 +172,10 @@ class ApplicationBloc with ChangeNotifier{
   updateToDo(Todo todo) async {
     bool succes = await todoService.updateToDo(todo);
     if(succes) fetchToDo();
+  }
+
+  deleteToDo(String docId) async {
+    await todoService.deleteToDo(docId);
+    fetchToDo();
   }
 }

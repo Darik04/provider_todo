@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:todo_with_firebase/src/bloc/application_bloc.dart';
 import 'package:todo_with_firebase/src/models/todo.dart';
 
+import '../app.dart';
+
 class DetailScreen extends StatefulWidget {
   final Todo todo;
   const DetailScreen({this.todo});
@@ -16,7 +18,7 @@ class _DetailScreenState extends State<DetailScreen> {
   int newStatus;
 
   final formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   TextEditingController titleController = new TextEditingController();
   TextEditingController descController = new TextEditingController();
@@ -27,13 +29,19 @@ class _DetailScreenState extends State<DetailScreen> {
     titleController.text = widget.todo.title;
     descController.text = widget.todo.descriptions;
   }
-  showSnackBar(String message){
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message),));
-  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+     floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.white,
+            elevation: 6.0,
+            onPressed: () { 
+              Provider.of<ApplicationBloc>(context, listen: false).deleteToDo(widget.todo.docId);
+              Navigator.of(context).pop(); 
+            },
+            child: Icon(Icons.delete_outline_outlined, color: Colors.red)
+            ),
       appBar: AppBar(
         title: Text('Просмотр'),
         backgroundColor: newStatus == 1 ? Colors.cyan[800] : newStatus == 2 ? Colors.red[800] : newStatus == 3 ? Colors.yellow[900] : Colors.lightBlue[800],
@@ -85,13 +93,14 @@ class _DetailScreenState extends State<DetailScreen> {
                       onTap: (){
                         if(formKey.currentState.validate()){
                           Provider.of<ApplicationBloc>(context, listen: false).updateToDo(Todo(docId: widget.todo.docId, author: widget.todo.author, title: titleController.text.trim(), descriptions: descController.text.trim(), status: newStatus));
-                          showSnackBar("Ваше дело успешно обнавлено!");
+              
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => App()));
                         }
                       },
                                     child: Container(
                         height: 50.0,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: newStatus == 1 ? Colors.cyan[800] : newStatus == 2 ? Colors.red[800] : newStatus == 3 ? Colors.yellow[900] : Colors.lightBlue[800],
                           borderRadius: BorderRadius.circular(25.0),
                         ),
                         child: Center(

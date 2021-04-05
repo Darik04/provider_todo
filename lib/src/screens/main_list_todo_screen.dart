@@ -98,14 +98,7 @@ void _closeDrawer() {
               color: Colors.white,
             ),
           ),
-          actions: [
-            GestureDetector(
-              onTap: (){
-                Provider.of<ApplicationBloc>(context, listen: false).fetchToDo();
-              },
-              child: Icon(Icons.update_outlined)
-            )
-          ],
+
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.today_outlined)),

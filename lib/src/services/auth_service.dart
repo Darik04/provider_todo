@@ -91,5 +91,51 @@ FirebaseAuth _auth = FirebaseAuth.instance;
     }
   }
 
+  Future changeUserData(String firstName, String lastName) async{
+    try{
+      String email = await HelperFunctions.getUserEmailSharedPreference();
+      await users.where("email", isEqualTo: email).get().then((value) async {
+        await users.doc(value.docs.last.id).update(
+          {
+            'firstName': firstName,
+            'lastName': lastName
+          }
+        ).then((value) async {
+          await HelperFunctions.saveUserFirstNameSharedPreference(firstName);
+          await HelperFunctions.saveUserLastNameSharedPreference(lastName);
+          
+        });
+        
+      });
+      return true;
+    }catch(e){
+      print(e.toString());
+      return false;
+    }
+  }
 
+  Future changeUserPassword(String oldPassword, String newPassword) async {
+    try{
+      String email = await HelperFunctions.getUserEmailSharedPreference();
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: oldPassword
+      ).then((value) {
+        value.user.updatePassword(newPassword);
+      });
+      return true;
+
+    }on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+          return false;
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+          return false;
+        }
+      }catch(e){
+        print(e.toString());
+        return false;
+    }
+  }
 }

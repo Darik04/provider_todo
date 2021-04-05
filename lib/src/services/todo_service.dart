@@ -71,5 +71,11 @@ class TodoService{
     }
   }
 
-  
+  Future deleteToDo(String docId) async {
+    try{
+      await todos.doc(docId).delete();
+    }catch(e){
+      print(e.toString());
+    }
+  }
 }

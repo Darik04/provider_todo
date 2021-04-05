@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_with_firebase/src/app.dart';
 import 'package:todo_with_firebase/src/bloc/application_bloc.dart';
+import 'package:todo_with_firebase/src/screens/change_user_data_screen.dart';
+import 'package:todo_with_firebase/src/screens/change_user_password_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
 final listTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600);
@@ -100,7 +102,9 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
                               Text('Редактировать профиль',
                                   style: listTextStyle),
                               GestureDetector(
-                                  
+                                  onTap: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ChangeUserData(firstName: appBloc.userModel.firstName, lastName: appBloc.userModel.lastName)));
+                                  },
                                   child: Icon(
                                     Icons.create_outlined,
                                     size: 30.0,
@@ -109,6 +113,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
                           )
                   ),
                 ),
+                SizedBox(height: 10.0),
             Material(
                   color: Theme.of(context).cardColor,
                   elevation: 4.0,
@@ -117,10 +122,12 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
                     child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text('Редактировать профиль',
+                              Text('Изменить пароль',
                                   style: listTextStyle),
                               GestureDetector(
-                                  
+                                  onTap: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ChangeUserPassword()));
+                                  },
                                   child: Icon(
                                     Icons.create_outlined,
                                     size: 30.0,
