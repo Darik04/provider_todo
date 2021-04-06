@@ -7,8 +7,12 @@ import 'package:todo_with_firebase/src/models/todo.dart';
 class TodoService{
   CollectionReference todos = FirebaseFirestore.instance.collection('todos');
 
+
+  //List for return!
   List<Todo> todoList = [];
   
+
+  //Insert todo to Firebase
   Future addToDo(String title, String descriptions) async {
     try{
       String email = await HelperFunctions.getUserEmailSharedPreference();
@@ -26,6 +30,8 @@ class TodoService{
     }
   }
 
+
+  //Getting all todos from user account
   Future fetchToDos() async {
     try{ 
       todoList = [];
@@ -54,6 +60,8 @@ class TodoService{
     }
   }
 
+
+  //Update todo
   Future updateToDo(Todo todo) async {
     try{
       await todos.doc(todo.docId).update(
@@ -71,6 +79,8 @@ class TodoService{
     }
   }
 
+
+  //Delete todo by document ID
   Future deleteToDo(String docId) async {
     try{
       await todos.doc(docId).delete();

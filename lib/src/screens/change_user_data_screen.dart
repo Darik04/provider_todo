@@ -13,9 +13,11 @@ class ChangeUserData extends StatefulWidget {
 }
 
 class _ChangeUserDataState extends State<ChangeUserData> {
-  TextEditingController lastNameController = new TextEditingController();
 
+
+  TextEditingController lastNameController = new TextEditingController();
   TextEditingController firstNameController = new TextEditingController();
+
 
   @override
   void initState() { 
@@ -23,6 +25,8 @@ class _ChangeUserDataState extends State<ChangeUserData> {
     lastNameController.text = widget.lastName;
     firstNameController.text = widget.firstName;
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +108,6 @@ class _ChangeUserDataState extends State<ChangeUserData> {
                   );
                 },),
               SizedBox(height: 10.0),
-              //_errorNotify != null ? Center(child: Text(_errorNotify, style: TextStyle(color: Colors.red, fontSize: 20.0, fontWeight: FontWeight.bold),),) : Container(),
               Divider(height: 10.0),
               
             ],

@@ -61,7 +61,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   _buildDescriptionsTextField(),
                   SizedBox(height: 30.0,),
                   DropdownButton(
-                    hint: Text('Please choose a location'), // Not necessary for Option 1
+                    hint: Text('Выберите статус'), // Not necessary for Option 1
                     value: statusList[newStatus],
                     onChanged: (newValue) {
                       setState(() {

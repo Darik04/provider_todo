@@ -9,10 +9,14 @@ class ChangeUserPassword extends StatefulWidget {
 }
 
 class _ChangeUserPasswordState extends State<ChangeUserPassword> {
+
+  //Text editing controllers for change password
   TextEditingController oldPasswordController = new TextEditingController();
   TextEditingController newPasswordController = new TextEditingController();
   TextEditingController passwordConfirmController = new TextEditingController();
 
+
+  //Hide password fields
   bool _toggleVisibility = true;
   bool _toggleNewVisibility = true;
   bool _toggleConfirmVisibility = true;
