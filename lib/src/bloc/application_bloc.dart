@@ -9,34 +9,7 @@ import 'package:todo_with_firebase/src/services/auth_service.dart';
 import 'package:todo_with_firebase/src/services/todo_service.dart';
 
 
-enum listTodoStateEnum{
-    isEmpty,
-    isLoading,
-    isNotEmprty
-  }
 
-enum userLoggedEnum{
-    isLoading,
-    isLogged,
-    isNotLogged,
-  }
-  enum signInEnum{
-    isLoading,
-    isDefault,
-    isError,
-  }
-  enum signUpEnum{
-    isLoading,
-    isDefault,
-    isError
-  }
-
-  enum userChangePasswordEnum{
-    isLoading,
-    isDefault,
-    isError,
-    isSuccess
-  }
 class ApplicationBloc with ChangeNotifier{
 
   AuthService authService = new AuthService();

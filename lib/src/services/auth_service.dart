@@ -7,6 +7,8 @@ class AuthService{
 CollectionReference users = FirebaseFirestore.instance.collection('users');
 FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+  //Sign Up user to Firebase Auth
   Future signUpUser(String email, String password, String firstName, String lastName) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
@@ -40,7 +42,7 @@ FirebaseAuth _auth = FirebaseAuth.instance;
 
 
 
-  //Sign IN
+   //Sign In user to Firebase Auth
   Future signInUser(String email, String password) async {
     
     try {
@@ -77,6 +79,8 @@ FirebaseAuth _auth = FirebaseAuth.instance;
       }
   }
 
+
+   //Sign Out user 
   Future signOut() async {
     try {
       await _auth.signOut();
@@ -91,6 +95,8 @@ FirebaseAuth _auth = FirebaseAuth.instance;
     }
   }
 
+
+  //Change user data!
   Future changeUserData(String firstName, String lastName) async{
     try{
       String email = await HelperFunctions.getUserEmailSharedPreference();
@@ -114,6 +120,8 @@ FirebaseAuth _auth = FirebaseAuth.instance;
     }
   }
 
+
+  //Change user only password!
   Future changeUserPassword(String oldPassword, String newPassword) async {
     try{
       String email = await HelperFunctions.getUserEmailSharedPreference();

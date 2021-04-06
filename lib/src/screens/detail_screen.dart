@@ -14,6 +14,8 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
 
+
+  //StatusList - это было в ТЗ!
   List<String> statusList = ['To Do', 'In Progress', 'Testing', 'Done'];
   int newStatus;
 

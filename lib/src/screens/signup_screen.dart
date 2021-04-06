@@ -24,6 +24,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _toggleVisibility = true;
   bool _toggleConfirmVisibility = true;
 
+
+
   showSnackBar(String message){
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message),));
   }
@@ -57,18 +59,7 @@ Widget _signUp(){
                 style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 35.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: <Widget>[
-              //     Text(
-              //       'Забыли пароль?',
-              //       style: TextStyle(
-              //           fontSize: 16.0,
-              //           color: Theme.of(context).primaryColor,
-              //           fontWeight: FontWeight.bold),
-              //     )
-              //   ],
-              // ),
+              
               SizedBox(height: 10.0),
               Card(
                 elevation: 5.0,
@@ -175,6 +166,10 @@ Widget _signUp(){
         );
   }
 
+
+
+
+  //Text fields
   Widget _buildSignUpEmailTextField() {
     return TextFormField(
         controller: emailSignUpController,
