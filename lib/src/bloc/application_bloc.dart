@@ -105,13 +105,17 @@ class ApplicationBloc with ChangeNotifier{
   }
 
   signUp(String email, String password, String firstName, String lastName) async {
+    _signUpState = signUpEnum.isLoading;
+    notifyListeners();
     bool isSuccess = await authService.signUpUser(email, password, firstName, lastName);
     if(isSuccess){
       checkLoggedUser();
       _signUpState = signUpEnum.isDefault;
+      return true;
     }else{
       _signUpState = signUpState.isError;
       notifyListeners();
+      return false;
     }
   }
 

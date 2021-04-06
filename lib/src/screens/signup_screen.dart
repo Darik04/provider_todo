@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_with_firebase/src/app.dart';
 import 'package:todo_with_firebase/src/bloc/application_bloc.dart';
 import 'package:todo_with_firebase/src/screens/signin_screen.dart';
 
@@ -96,11 +97,13 @@ Widget _signUp(){
                 builder: (context, appBloc, child){
                   
                   return GestureDetector(
-                    onTap: (){
+                    onTap: () async {
                       if(formKeySignUp.currentState.validate()){
                         if(passwordSignUpController.text.trim() == passwordSignUpConfirmController.text.trim()){
-                          appBloc.signUp(emailSignUpController.text.trim(), passwordSignUpController.text.trim(), firstNameController.text.trim(), lastNameController.text.trim());
-
+                          bool success = await appBloc.signUp(emailSignUpController.text.trim(), passwordSignUpController.text.trim(), firstNameController.text.trim(), lastNameController.text.trim());
+                          if(success){
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => App()));
+                          }
                         }else{
                           showSnackBar('Введеные пароли не совпадают!');
                         }
@@ -125,6 +128,20 @@ Widget _signUp(){
                   );
                 },),
               SizedBox(height: 10.0),
+              Consumer<ApplicationBloc>(
+                builder: (context, appBloc, child){
+                        switch(appBloc.signUpState){
+                          case signUpEnum.isDefault:
+                            return Container();
+                          case signUpEnum.isLoading:
+                            return Center(child: CircularProgressIndicator(),);
+                            break;
+                          case signUpEnum.isError:
+                            return Center(child: Text('Пользователь с таким email-ом уже есть!'),);
+                            break;
+                        }
+                }
+              ),
               //_errorNotify != null ? Center(child: Text(_errorNotify, style: TextStyle(color: Colors.red, fontSize: 20.0, fontWeight: FontWeight.bold),),) : Container(),
               Divider(height: 10.0),
               Row(

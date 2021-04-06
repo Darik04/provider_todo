@@ -19,10 +19,15 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
         RaisedButton(
           child: Text('Выйти', style: TextStyle(color: Colors.white),),
           color: Colors.red,
-          onPressed: (){
-            Navigator.pop(context);
-            Provider.of<ApplicationBloc>(context, listen: false).signOut();
-            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => App()));
+          onPressed: () async {
+            
+            await Provider.of<ApplicationBloc>(context, listen: false).signOut();
+            
+            Navigator.pushAndRemoveUntil(
+                  context,
+                    MaterialPageRoute(builder: (BuildContext context) => App()),
+                  (Route<dynamic> route) => false
+                  );
           },
         ),
         RaisedButton(
@@ -34,7 +39,10 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
         )
       ],
     );
-    showDialog(context: _scaffoldKey.currentContext, builder: (context) => alertDialog);
+    showDialog(context: _scaffoldKey.currentContext ,builder: (context){
+      return alertDialog;
+    });
+    
   }
 
 
@@ -150,6 +158,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
         );
           break;
         default:
+          
           return Container();
             }
             
